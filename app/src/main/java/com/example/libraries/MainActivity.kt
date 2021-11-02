@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.appcompat.app.AlertDialog
 import com.airbnb.lottie.LottieAnimationView
 
 class MainActivity : AppCompatActivity() {
@@ -17,7 +18,14 @@ class MainActivity : AppCompatActivity() {
         crashButton.setOnClickListener {
             throw RuntimeException("Test Crash") // Force a crash
         }
-
+        val intent = intent
+        val message = intent.getStringExtra("message")
+        if(!message.isNullOrEmpty()) {
+            AlertDialog.Builder(this)
+                .setTitle("Notification")
+                .setMessage(message)
+                .setPositiveButton("Ok", { dialog, which -> }).show()
+        }
         addContentView(crashButton, ViewGroup.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT))
